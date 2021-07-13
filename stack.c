@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:25:05 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/11 10:48:30 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/13 23:21:57 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,12 +171,41 @@ void	insertion_sort(t_stack *stack_a, t_stack *stack_b)
 
 
 
+int		is_asc(t_stack *stack)
+{
+	long long	max;
+	int			i;
+
+	max = stack->data[0];
+	i = -1;
+	while (++i <= stack->top)
+	{	
+		if (stack->data[i] < max)
+			return (0);
+		max = stack->data[i];
+	}
+	return (1);
+}
+
+int		is_desc(t_stack *stack)
+{
+	long long	min;
+	int			i;
+
+	min = stack->data[0];
+	i = -1;
+	while (++i <= stack->top)
+	{
+		if (stack->data[i] > min)
+			return (0);
+		min = stack->data[i];
+	}
+	return (1);
+}
 
 
 
-
-
-void	sort_beta(t_stack *stack_a, t_stack *stack_b)
+void	sort_alpha(t_stack *stack_a, t_stack *stack_b)
 {
 	while (stack_a->top >= 0)
 	{
@@ -188,6 +217,25 @@ void	sort_beta(t_stack *stack_a, t_stack *stack_b)
 		{
 			pa;
 			sa;
+		}
+	}
+	while (stack_b->top >= 0)
+		pa;
+}
+
+
+void	sort_beta(t_stack *stack_a, t_stack *stack_b)
+{
+	while (stack_b->top >= 0)
+	{
+		if (stack_a->top == -1)
+			pa;
+		if (stack_b->data[stack_b->top] < stack_a->data[stack_a->top])
+			pa;
+		else
+		{
+			pb;
+			sb;
 		}
 	}
 	while (stack_b->top >= 0)

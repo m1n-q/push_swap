@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:20:51 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/11 22:55:36 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/14 02:40:30 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,15 @@ void	swap_data_tmp(t_stack *stack_a, t_stack *stack_b, int i, int j);
 void	sort_three_elems_tmp(t_stack *stack_a, t_stack *stack_b, int top, int bottom);
 void	insert(t_stack *stack_a, t_stack *stack_b, int idx, int target_idx);
 void	insertion_sort(t_stack *stack_a, t_stack *stack_b);
+
+void	sort_alpha(t_stack *stack_a, t_stack *stack_b);
 void	sort_beta(t_stack *stack_a, t_stack *stack_b);
+
 void	swap_data2(t_stack *stack_a, t_stack *stack_b, int i, int j);
 
 void	sort_a_using_b(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lower_idx, long long pivot_val);
 void	sort_b_using_a(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lower_idx, long long pivot_val);
+
+int		is_asc(t_stack *stack);
+int		is_desc(t_stack *stack);
 #endif

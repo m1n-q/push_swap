@@ -6,58 +6,52 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:21:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/12 12:24:54 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/14 02:41:33 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-# define A 1
-# define B -1
-# define PRT print_all(stack_a, stack_b);
+
 # define DEBUG printf("upper_idx = (%d), lower_idx = (%d)\n\
 pivot = %lld\n", upper_idx,lower_idx,pivot_val);
+# define PRT DEBUG print_all(stack_a, stack_b);
+
+
+
+
+
+
 
 void	sort_b_using_a(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lower_idx, long long pivot_val)
 {
 	int			sub_size;
 	int			pivot_idx;
-	long long	upper_val;
-	t_move_info	upper_to_top;
 
 	
-	char tmp;
-	while (scanf("%c",&tmp) && tmp != '\n');
-	sub_size = upper_idx - lower_idx + 1;
+	// char tmp;
+	// while (scanf("%c",&tmp) && tmp != '\n');
+	
+	
+	if (upper_idx < 0 || lower_idx < 0 )
+		return ;	
 
 	
-	// if (stack_a->top < 0)
-	// 	return;
-	if (sub_size <= 1)
-		return ;
-	if (sub_size == 2)
-	{
-		if (stack_b->data[upper_idx] < stack_b->data[lower_idx])
-			swap_data2(stack_a, stack_b, upper_idx, lower_idx);
-		return ;
-	}
-	
-	if (sub_size == 3)
-	{
-		sort_three_elems_rev(stack_a, stack_b, upper_idx, lower_idx);
-		return ;
-	}
-
-	// pivot_idx = get_median_index(stack_b, upper_idx, lower_idx);
-	// pivot_val = stack_b->data[pivot_idx];
-	upper_val = stack_b->data[upper_idx];
-	
-
-	
-	DEBUG
 	printf("sorting B . . .\n");
 	printf("초기상태\n");
 	PRT
+	
+
+
+
+	// if (is_asc(stack_b))
+	// 	return;
+
+
+	sub_size = upper_idx - lower_idx + 1;
+	if (sub_size <= 1)
+		return ;
+	
 	/* 
 		큰 값을 A 로 보내기, 단, subproblem 의 경계까지만
 		(sub_size)
@@ -103,27 +97,27 @@ void	sort_b_using_a(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lowe
 /******************************************************************************/
 
 	/*
-		B의 상단에, 피벗보다 작은 부분만 남음.
-		B 에 보냈던 피벗, 큰값 다시 가져오기?
-		우짜지. 회전해서 upper_idx 를 top 으로 끌고오는 연산 없이
-		정렬해보자.
+		sorting B 재귀를 끝내고 나면
+		B의 상단에, 피벗보다 작은 부분 (띄엄띄엄...) 만 남음.
+		A 에 보냈던 피벗, 큰값 다시 가져오기?
 	*/
 
 	
-	printf("다음 재귀 진행 전\n");
+	printf("sorting_B : 다음 재귀 진행 전\n");
 	PRT
 
-	pivot_idx = get_median_index(stack_b, stack_b->top, lower_idx);
-	pivot_val = stack_b->data[pivot_idx];
-	sort_b_using_a(stack_a, stack_b, stack_b->top, lower_idx, pivot_val);
-	sort_a_using_b(stack_a, stack_b, stack_a->top, 
-				stack_a->top - poped_while_find_large + 1, 
-				stack_a->data[
-					get_median_index(
-						stack_a, stack_a->top, 
-						stack_a->top - poped_while_find_large + 1)] 
-					);
-	printf("재귀 빠져나온 후\n");
+	int			next_pivot_idx = get_median_index(stack_b, stack_b->top, lower_idx);
+	long long	next_pivot_val = stack_b->data[next_pivot_idx];
+	sort_b_using_a(stack_a, stack_b, stack_b->top, lower_idx, next_pivot_val);
+
+	printf("sorting_B : 재귀(sorting B) 빠져나온 후\n");
+	PRT
+
+	sort_a_using_b(stack_a, stack_b, stack_a->top, stack_a->top - poped_while_find_large, stack_a->data[get_median_index(stack_a, stack_a->top, stack_a->top - poped_while_find_large)]);
+
+
+	printf("sorting_B : 재귀(sorting A) 빠져나온 후\n");
+	printf("넘겼던 개수 : %d\n", poped_while_find_large + 1);
 	PRT
 	i = 0;
 	while (i++ <= poped_while_find_large)
@@ -131,7 +125,7 @@ void	sort_b_using_a(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lowe
 
 	printf("A 에 넘겼던 것들 B로 돌림. 종료\n");
 	PRT
-	// sort_b_using_a(stack_a, stack_b, pivot_idx - 1, lower_idx);
+
 	
 
 }
@@ -144,27 +138,29 @@ void	sort_a_using_b(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lowe
 {
 	int			sub_size;
 	int			pivot_idx;
-	long long	upper_val;
-	t_move_info	upper_to_top;
+
 	
 	
-	char tmp;
-	while (scanf("%c",&tmp) && tmp != '\n');
+	// char tmp;
+	// while (scanf("%c",&tmp) && tmp != '\n');
 	
 	
 	
+	if (is_desc(stack_a))
+		return;
+
+
+	if (upper_idx < 0 || lower_idx < 0 )
+		return ;
+
 	sub_size = upper_idx - lower_idx + 1;
 	if (sub_size <= 1)
 		return ;
-	if (sub_size == 2)
-	{
-		if (stack_a->data[upper_idx] > stack_a->data[lower_idx])
-			swap_data(stack_a, stack_b, upper_idx, lower_idx);
-		return ;
-	}
 		
-	DEBUG
+
 	printf("sorting A . . .\n");
+	printf("초기상태\n");
+	PRT
 /******************************************************************************/
 	/* 
 		작은 값을 B 로 보내기, 단, subproblem 의 경계까지만
@@ -206,20 +202,23 @@ void	sort_a_using_b(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lowe
 
 
 		
-	pivot_idx = get_median_index(stack_a, stack_a->top, 0);
-	pivot_val = stack_a->data[pivot_idx];
-	sort_a_using_b(stack_a, stack_b, stack_a->top, 0, pivot_val);		// subprob 의 윗부분을 다 넘긴 상태임. ( 작은 부분 )
-
-	PRT
-	sort_b_using_a(stack_a, stack_b, stack_b->top, 0, stack_b->data[get_median_index(stack_b, stack_b->top, 0)]);
+	int			next_pivot_idx = get_median_index(stack_a, stack_a->top, 0);
+	long long	next_pivot_val = stack_a->data[next_pivot_idx];
 	
-
+	
+	sort_a_using_b(stack_a, stack_b, stack_a->top, lower_idx, next_pivot_val);		// subprob 의 윗부분을 다 넘긴 상태임. ( 작은 부분 )
+	printf("sorting_A : 재귀(sorting a) 빠져나온 후\n");
 	PRT
-	//stack_b->top - poped_while_find_small
+	
+	sort_b_using_a(stack_a, stack_b, stack_b->top, stack_b->top - poped_while_find_small, stack_b->data[get_median_index(stack_b, stack_b->top, stack_b->top - poped_while_find_small)]);
+	printf("sorting_A : 재귀(sorting B) 빠져나온 후\n");
+	printf("넘겼던 개수 : %d\n", poped_while_find_small + 1);
+	PRT
+	
 	i = 0;
-	while (i++ <= poped_while_find_small)					// 이 부분만 빼고 B에서도 정렬..?	// 돌아오는 애들,, 은 작은놈들, 정렬이 안되어있을것임.
+	while (i++ <= poped_while_find_small)					// 	넘긴부분 다시 가져와야함. 근데 정렬을 해놓고 가져와야함.
 		pa;
-
+	printf("B 에 넘겼던 것들 A로 돌림. 종료\n");
 	PRT
 }
 
@@ -250,15 +249,10 @@ int	main(int argc, char **argv)
 			push(stack_a, is_int);
 	}
 	
-	// quick_sort_alpha(stack_a, stack_b, stack_a->top, 0,  0);
-	// print_all(stack_a, stack_b);
 	sort_a_using_b(stack_a, stack_b, stack_a->top, 0, stack_a->data[get_median_index(stack_a, stack_a->top, 0)]);
-	print_all(stack_a, stack_b);
 	// print_all(stack_a, stack_b);
-	// sort_b_using_a(stack_a, stack_b, stack_b->top, 45);
-	// print_all(stack_a, stack_b);
-	// sort_beta(stack_a, stack_b);
-	// insertion_sort(stack_a, stack_b);
+	
+	
 	
 }
 
