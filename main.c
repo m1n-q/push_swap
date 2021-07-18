@@ -6,220 +6,287 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:21:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/14 02:41:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/18 17:41:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+# define DEBUG printf("upper_idx = (%d), lower_idx = (%d)\npivot = %lld\n<depth = %d>\n", upper_idx,lower_idx,pivot_val, depth);
+# define PRT DEBUG print_all(stack);
+# define PRT2 printf("upper_idx = (%d), lower_idx = (%d)\np1 = %lld, p2 = %lld\n", upper_idx,lower_idx, val.p1, val.p2); print_all(stack);
 
-# define DEBUG printf("upper_idx = (%d), lower_idx = (%d)\n\
-pivot = %lld\n", upper_idx,lower_idx,pivot_val);
-# define PRT DEBUG print_all(stack_a, stack_b);
-
-
-
-
-
-
-
-void	sort_b_using_a(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lower_idx, long long pivot_val)
+int	dual_qsort_a(t_set *stack, int upper_idx, int lower_idx)
 {
-	int			sub_size;
-	int			pivot_idx;
+	int	sub_size;
+	int	rotated_while_find_small = 0;
+	int	rotated_while_find_mid = 0;
+	int	rotated_while_find_large = 0;
+	int	poped_while_find_small = 0;
+	int	poped_while_find_mid = 0;
+	int	poped_while_find_large = 0;
+	int	i;
+	t_vector_val	val;
+	t_vector_idx	idx;
 
-	
+	// printf("\n< SORTING A >\n");
+	idx = get_dual_pivot(stack->a, upper_idx, lower_idx);
+	val.p1 = stack->a->data[idx.l];
+	val.p2 = stack->a->data[idx.r];
+
+
+	// PRT2
 	// char tmp;
 	// while (scanf("%c",&tmp) && tmp != '\n');
-	
-	
-	if (upper_idx < 0 || lower_idx < 0 )
-		return ;	
 
-	
-	printf("sorting B . . .\n");
-	printf("초기상태\n");
-	PRT
-	
-
-
-
-	// if (is_asc(stack_b))
-	// 	return;
 
 
 	sub_size = upper_idx - lower_idx + 1;
-	if (sub_size <= 1)
-		return ;
-	
-	/* 
-		큰 값을 A 로 보내기, 단, subproblem 의 경계까지만
-		(sub_size)
-	*/
 
-	int	rotated_while_find_large = 0;
-	int	poped_while_find_large = 0;
-	int	i = 0;
+	// if (sub_size < 3)
+	// {
+	// 	//sort;
+	// 	return (0);
+	// }
 
-	while (i++ < sub_size)
+	if (is_desc(stack->a, stack->a->top, 0) && is_asc(stack->b, stack->b->top, 0))
 	{
-		if (stack_b->data[stack_b->top] > pivot_val)
-		{
+		while (stack->b->top >= 0)
 			pa;
-			poped_while_find_large++;			
-		}
-
-		else
-		{	
-			rb;
-			rotated_while_find_large++;
-		}
+		return (-1);
 	}
-	
-	/* 
-		stack_B 의 회전상태 복구
-		(sub_size)
+
+
+
+
+	if (sub_size < 1)
+		return (0);
+
+	if (upper_idx < 0 || lower_idx < 0)
+		return (0);
+
+	if (is_desc(stack->a, upper_idx, lower_idx))
+		return (0);
+
+
+
+/******************************************************************************/
+	/*
+		작은 값을 B 로 보내기
+		O(sub_size)
 	*/
 
-	while (rotated_while_find_large--)			
-	{	
-		
-		rrb;
-		if (stack_b->data[stack_b->top] == pivot_val)	
-			pa;		// 복구하면서 피벗 찾아서 A로 보내기
+	i = -1;
+	while (++i < sub_size)
+	{
+		if (stack->a->data[stack->a->top] < val.p1)
+		{
+			pb;
+			poped_while_find_small++;
+		}
+		else
+		{
+			ra;
+			rotated_while_find_small++;
+		}
 	}
 
-
-
-
+	i = -1;
+	while (++i < rotated_while_find_small)
+	{
+		rra;
+		if (stack->a->data[stack->a->top] == val.p1)
+		{
+			pb;
+			poped_while_find_small++;
+		}
+	}
 
 
 /******************************************************************************/
 
 	/*
-		sorting B 재귀를 끝내고 나면
-		B의 상단에, 피벗보다 작은 부분 (띄엄띄엄...) 만 남음.
-		A 에 보냈던 피벗, 큰값 다시 가져오기?
+		중간 값을 B 로 보내기
+		O(sub_size)
 	*/
 
-	
-	printf("sorting_B : 다음 재귀 진행 전\n");
-	PRT
+	i = -1;
+	while (++i < sub_size - poped_while_find_small)
+	{
+		if (stack->a->data[stack->a->top] < val.p2)
+		{
+			pb;
+			poped_while_find_mid++;
+		}
+		else
+		{
+			ra;
+			rotated_while_find_mid++;
+		}
+	}
 
-	int			next_pivot_idx = get_median_index(stack_b, stack_b->top, lower_idx);
-	long long	next_pivot_val = stack_b->data[next_pivot_idx];
-	sort_b_using_a(stack_a, stack_b, stack_b->top, lower_idx, next_pivot_val);
 
-	printf("sorting_B : 재귀(sorting B) 빠져나온 후\n");
-	PRT
+	i = -1;
+	while (++i < rotated_while_find_mid)
+	{
+		rra;
+		if (stack->a->data[stack->a->top] == val.p2)
+		{
+			pb;
+			poped_while_find_mid++;
+		}
+	}
 
-	sort_a_using_b(stack_a, stack_b, stack_a->top, stack_a->top - poped_while_find_large, stack_a->data[get_median_index(stack_a, stack_a->top, stack_a->top - poped_while_find_large)]);
+
+/******************************************************************************/
 
 
-	printf("sorting_B : 재귀(sorting A) 빠져나온 후\n");
-	printf("넘겼던 개수 : %d\n", poped_while_find_large + 1);
-	PRT
-	i = 0;
-	while (i++ <= poped_while_find_large)
-		pb;
+	if (-1 == dual_qsort_a(stack, stack->a->top, stack->a->top - (sub_size - poped_while_find_mid - poped_while_find_small) + 1))
+		return -1;
+	if (-1 == dual_qsort_b(stack, stack->b->top, stack->b->top - poped_while_find_mid + 1))
+		return -1;
+	if (-1 == dual_qsort_b(stack, stack->b->top, stack->b->top - poped_while_find_small + 1))
+		return -1;
 
-	printf("A 에 넘겼던 것들 B로 돌림. 종료\n");
-	PRT
-
-	
-
+/******************************************************************************/
+	return (0);
 }
 
-
-
-
-
-void	sort_a_using_b(t_stack *stack_a,  t_stack *stack_b, int upper_idx, int lower_idx, long long pivot_val)
+int	dual_qsort_b(t_set *stack, int upper_idx, int lower_idx)
 {
-	int			sub_size;
-	int			pivot_idx;
+	int	sub_size;
+	int	rotated_while_find_small = 0;
+	int	rotated_while_find_mid = 0;
+	int	rotated_while_find_large = 0;
+	int	poped_while_find_small = 0;
+	int	poped_while_find_mid = 0;
+	int	poped_while_find_large = 0;
+	int	i;
+	t_vector_val	val;
+	t_vector_idx	idx;
 
-	
-	
+	// printf("\n< SORTING B >\n");
+	idx =  get_dual_pivot(stack->b, upper_idx, lower_idx);
+	val.p1 = stack->b->data[idx.l];
+	val.p2 = stack->b->data[idx.r];
+
+
+	// PRT2
 	// char tmp;
 	// while (scanf("%c",&tmp) && tmp != '\n');
-	
-	
-	
-	if (is_desc(stack_a))
-		return;
 
 
-	if (upper_idx < 0 || lower_idx < 0 )
-		return ;
 
 	sub_size = upper_idx - lower_idx + 1;
-	if (sub_size <= 1)
-		return ;
-		
 
-	printf("sorting A . . .\n");
-	printf("초기상태\n");
-	PRT
-/******************************************************************************/
-	/* 
-		작은 값을 B 로 보내기, 단, subproblem 의 경계까지만
-		(sub_size)
-	*/
 
-	int	rotated_while_find_small = 0;
-	int	poped_while_find_small = 0;
-	int	i = 0;
-
-	while (i++ < sub_size)
+	if (is_desc(stack->a, stack->a->top, 0) && is_asc(stack->b, stack->b->top, 0))
 	{
-		if (stack_a->data[stack_a->top] < pivot_val)
-		{	
-			pb;
-			poped_while_find_small++;
-		}
-
-		else
-		{	
-			ra;
-			rotated_while_find_small++;
-		}
+		while (stack->b->top >= 0)
+			pa;
+		return (-1);
 	}
-	
-	/* 
-		stack_a 의 회전상태 복구
-		(sub_size)
+
+	if (sub_size < 1)
+		return (0);
+
+
+	if (sub_size == 1)
+	{
+		pa;
+		return (0);
+	}
+
+	if (upper_idx < 0 || lower_idx < 0)
+		return (0);
+
+
+
+
+/******************************************************************************/
+	/*
+		큰 값을 A 로 보내기
 	*/
 
-	while (rotated_while_find_small--)			
-	{	
-		rra;	
-		if (stack_a->data[stack_a->top] == pivot_val)	
-			pb;		// 복구하면서 피벗 찾아서 B로 보내기
+	i = -1;
+	while (++i < sub_size)
+	{
+		if (stack->b->data[stack->b->top] > val.p2)
+		{
+			pa;
+			poped_while_find_large++;
+		}
+		else
+		{
+			rb;
+			rotated_while_find_large++;
+		}
 	}
-	PRT
+
+	i = -1;
+	while (++i < rotated_while_find_large)
+	{
+		rrb;
+		if (stack->b->data[stack->b->top] == val.p2)
+		{
+
+			pa;
+			poped_while_find_large++;
+		}
+	}
+
+
+/******************************************************************************/
+
+	/*
+		중간 값을 A 로 보내기
+	*/
+
+	i = -1;
+	while (++i < sub_size - poped_while_find_large)
+	{
+		if (stack->b->data[stack->b->top] > val.p1)
+		{
+
+			pa;
+			poped_while_find_mid++;
+		}
+		else
+		{
+			rb;
+			rotated_while_find_mid++;
+		}
+	}
+
+
+	i = -1;
+	while (++i < rotated_while_find_mid)
+	{
+		rrb;
+		if (stack->b->data[stack->b->top] == val.p1)
+		{
+			pa;
+			poped_while_find_mid++;
+		}
+	}
+
+
 /******************************************************************************/
 
 
-		
-	int			next_pivot_idx = get_median_index(stack_a, stack_a->top, 0);
-	long long	next_pivot_val = stack_a->data[next_pivot_idx];
-	
-	
-	sort_a_using_b(stack_a, stack_b, stack_a->top, lower_idx, next_pivot_val);		// subprob 의 윗부분을 다 넘긴 상태임. ( 작은 부분 )
-	printf("sorting_A : 재귀(sorting a) 빠져나온 후\n");
-	PRT
-	
-	sort_b_using_a(stack_a, stack_b, stack_b->top, stack_b->top - poped_while_find_small, stack_b->data[get_median_index(stack_b, stack_b->top, stack_b->top - poped_while_find_small)]);
-	printf("sorting_A : 재귀(sorting B) 빠져나온 후\n");
-	printf("넘겼던 개수 : %d\n", poped_while_find_small + 1);
-	PRT
-	
-	i = 0;
-	while (i++ <= poped_while_find_small)					// 	넘긴부분 다시 가져와야함. 근데 정렬을 해놓고 가져와야함.
-		pa;
-	printf("B 에 넘겼던 것들 A로 돌림. 종료\n");
-	PRT
+
+	if (-1 == dual_qsort_a(stack, stack->a->top, stack->a->top - (poped_while_find_large + poped_while_find_mid) + 1))
+		return -1;
+
+
+
+	if (-1 == dual_qsort_b(stack, stack->b->top, stack->b->top - (sub_size - poped_while_find_mid - poped_while_find_large) + 1))
+		return -1;
+
+
+/******************************************************************************/
+
+	return (0);
 }
 
 
@@ -231,29 +298,29 @@ int	main(int argc, char **argv)
 {
 	int			i;
 	long long	is_int;
-	t_stack		*stack_a;
-	t_stack		*stack_b;
-	
+	t_set		stack;
+
 	i = argc;
 	if (argc < 2)
 		return 1;
-	if ((stack_a = init_stack(argc - 1)) == NULL)
+	if ((stack.a = init_stack(argc - 1)) == NULL)
 		return 2;
-	if ((stack_b = init_stack(argc - 1)) == NULL)
+	if ((stack.b = init_stack(argc - 1)) == NULL)
 		return 2;
 	while (--i > 0)
-	{	
+	{
 		if ((is_int = ft_atoi(argv[i])) == OVER_INTEGER)
 			return 3;
 		else
-			push(stack_a, is_int);
+			push(stack.a, is_int);
 	}
-	
-	sort_a_using_b(stack_a, stack_b, stack_a->top, 0, stack_a->data[get_median_index(stack_a, stack_a->top, 0)]);
-	// print_all(stack_a, stack_b);
-	
-	
-	
+
+
+	/* 700 , 5500 */
+
+	// sort_a_using_b(&stack, stack.a->top, 0, stack.a->data[get_median_index(stack.a, stack.a->top, 0)], 0);
+	dual_qsort_a(&stack, stack.a->top, 0);
+	// print_all(&stack);
 }
 
 
