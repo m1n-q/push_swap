@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:03:42 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/18 01:38:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/20 02:23:33 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		get_median_index(t_stack *stack, int top, int bottom)
 	if (stack->data[(top + bottom) / 2] < stack->data[top] && stack->data[top] < stack->data[bottom])
 		return (top);
 
-	printf("error (%d %d) : %lld %lld %lld\n", top, bottom, stack->data[bottom], stack->data[(top + bottom) / 2] , stack->data[top]);
+
 	return -1;
 }
 

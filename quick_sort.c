@@ -230,7 +230,7 @@ t_vector_idx	get_dual_pivot(t_stack *stack, int upper_idx, int lower_idx)
 		return (v);
 	}
 
-	v.l = get_median_index(stack, upper_idx, (lower_idx + upper_idx) / 2 + 1);
+	v.l = get_median_index(stack, upper_idx, lower_idx + (upper_idx - lower_idx) / 2 + 1);
 	v.r = get_median_index(stack, (lower_idx + upper_idx) / 2, lower_idx);
 	if (stack->data[v.l] > stack->data[v.r])
 	{

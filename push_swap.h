@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:20:51 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/17 23:54:40 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/20 02:45:55 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@
 # define rrb reverse_rotate(stack->b, "rrb\n")
 
 
+int		is_asc(t_stack *stack, int upper_idx, int lower_idx);
+int		is_desc(t_stack *stack, int upper_idx, int lower_idx);
+
+int		sort_b_using_a(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
+int		sort_a_using_b(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
 
 
 t_stack		*init_stack(int size);
@@ -71,16 +76,13 @@ void	sort_alpha(t_stack *stack_a, t_stack *stack_b);
 void	sort_beta(t_stack *stack_a, t_stack *stack_b);
 void	swap_data2(t_stack *stack_a, t_stack *stack_b, int i, int j);
 
-int		sort_a_using_b(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
-int		sort_b_using_a(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
-
-int		is_asc(t_stack *stack, int upper_idx, int lower_idx);
-int		is_desc(t_stack *stack, int upper_idx, int lower_idx);
 
 
 
 t_vector_idx	get_dual_pivot(t_stack *stack, int upper_idx, int lower_idx);
 
-int	dual_qsort_a(t_set *stack, int upper_idx, int lower_idx);
-int	dual_qsort_b(t_set *stack, int upper_idx, int lower_idx);
+
+
+int	dual_qsort_a(t_set *stack, int upper_idx, int lower_idx, int depth);
+int	dual_qsort_b(t_set *stack, int upper_idx, int lower_idx, int depth);
 #endif
