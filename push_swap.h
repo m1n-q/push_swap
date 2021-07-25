@@ -6,83 +6,89 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:20:51 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/20 02:45:55 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/25 12:45:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//NOTE: REMOVE print_all
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-
 
 # include <stdlib.h>
 # include <unistd.h>
 # include "type.h"
-						# include <stdio.h>
 
 # define OVER_INTEGER -2222222222LL
 # define EMPTY -3333333333LL
+# define NON_NUMERIC -4444444444LL
 
+/* init, exit */
+void				init(t_set *stack, t_ll_handler *ll);
+void				clear_all(t_set *stack, t_ll **head);
+void				error(t_set *stack, t_ll **head);
+void				init_count(t_count *count);
 
+/* linked list */
+t_ll				*ll_new(long long data);
+void				ll_push(t_ll **head, t_ll *new);
+int					ll_clear(t_ll **head);
 
-# define sa swap_top(stack->a, "sa\n")
-# define sb swap_top(stack->b, "sb\n")
+/* input */
+int					input_to_ll(t_ll_handler *ll, char *arg);
+void				ll_to_stack(t_ll **head, t_stack *stack);
+int					check_dup(t_ll **head);
 
-# define pa stack_to_stack(stack->b, stack->a, "pa\n")
-# define pb stack_to_stack(stack->a, stack->b, "pb\n")
+/* stack */
+int					init_stack(t_set *set, int size);
+void				push(t_stack *stack, long long val);
+long long			pop(t_stack *stack);
+int					clear_stack_set(t_set *stack);
 
-# define ra rotate(stack->a, "ra\n")
-# define rb rotate(stack->b, "rb\n")
+/* operation */
+void				swap_top(t_stack *stack);
+void				stack_to_stack(t_stack *to, t_stack *from);
+void				rotate(t_stack *stack);
+void				reverse_rotate(t_stack *stack);
 
-# define rra reverse_rotate(stack->a, "rra\n")
-# define rrb reverse_rotate(stack->b, "rrb\n")
+/* command */
+void				rr(char c, t_set *stack);
+void				r(char c, t_set *stack);
+void				s(char c, t_set *stack);
+void				p(char c, t_set *stack);
 
+/* index */
+int					get_index(t_stack *stack, long long val);
+int					get_median_index(long long *data, int top, int bottom);
+t_pivot_info		get_pivot_info(t_stack *stack, \
+								int upper_idx, int lower_idx);
 
-int		is_asc(t_stack *stack, int upper_idx, int lower_idx);
-int		is_desc(t_stack *stack, int upper_idx, int lower_idx);
+/* sort */
+int					partitioning_a(t_set *stack, int upper_idx, int lower_idx);
+int					partitioning_b(t_set *stack, int upper_idx, int lower_idx);
 
-int		sort_b_using_a(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
-int		sort_a_using_b(t_set *stack, int upper_idx, int lower_idx, long long pivot_val, int depth);
+/* subproblem */
+int					subproblem_a(t_set *stack, int sub_size);
+int					subproblem_b(t_set *stack, int sub_size);
 
+/* search utils */
+int					only_large_remained(t_stack *stack, long long pivot_val, \
+										int size, t_count *count);
+int					only_small_remained(t_stack *stack, long long pivot_val, \
+										int size, t_count *count);
+void				restore_a(t_set *stack, t_count *count);
+void				restore_b(t_set *stack, t_count *count);
 
-t_stack		*init_stack(int size);
-long long	ft_atoi(const char *str);
-int			ft_strcmp(char *s1, char *s2);
+/* search a, b */
+void				send_to_b(t_set *stack, t_pivot_info pivot, \
+							int size, t_count *count);
+void				send_to_a(t_set *stack, t_pivot_info pivot, \
+							int size, t_count *count);
 
-void		print_all(t_set *stack);
-void		push(t_stack *stack, long long val);
-long long	pop(t_stack *stack);
+/* few arg */
+int					processing_few_arg(t_set *stack);
 
-
-void		swap_top(t_stack *stack, char *msg);
-void		stack_to_stack(t_stack *from, t_stack *to, char *msg);
-void		rotate(t_stack *stack, char *msg);
-void		reverse_rotate(t_stack *stack, char *msg);
-size_t		ft_strlen(const char *s);
-
-
-int		get_median_index(t_stack *stack, int top, int bottom);
-void	swap_data(t_stack *stack_a, t_stack *stack_b, int i, int j);
-void	sort_three_elems(t_stack *stack_a, t_stack *stack_b, int top, int bottom);
-int		get_direction(t_stack *stack, int to_be_top);
-int		get_index(t_stack *stack, long long value);
-void	sort_three_elems_rev(t_stack *stack_a, t_stack *stack_b, int top, int bottom);
-void	quick_sort_alpha(t_stack *stack_a,  t_stack *stack_b, int top, int bottom, int depth);
-
-void	swap_data_tmp(t_stack *stack_a, t_stack *stack_b, int i, int j);
-void	insert(t_stack *stack_a, t_stack *stack_b, int idx, int target_idx);
-void	insertion_sort(t_stack *stack_a, t_stack *stack_b);
-
-void	sort_alpha(t_stack *stack_a, t_stack *stack_b);
-void	sort_beta(t_stack *stack_a, t_stack *stack_b);
-void	swap_data2(t_stack *stack_a, t_stack *stack_b, int i, int j);
-
-
-
-
-t_vector_idx	get_dual_pivot(t_stack *stack, int upper_idx, int lower_idx);
-
-
-
-int	dual_qsort_a(t_set *stack, int upper_idx, int lower_idx, int depth);
-int	dual_qsort_b(t_set *stack, int upper_idx, int lower_idx, int depth);
+/* utils */
+void				ft_putstr_fd(char *s, int fd);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
+void				my_qsort(long long *arr, int start, int end);
 #endif

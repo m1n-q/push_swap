@@ -6,50 +6,66 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:23:48 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/17 22:52:49 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/23 13:14:52 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPE_H
 # define TYPE_H
-# define RR 1
-# define R 0
-typedef struct	s_stack
+
+typedef struct s_stack
 {
 	int			top;
 	int			size;
 	long long	*data;
 }				t_stack;
 
-typedef struct	s_ll
+typedef struct s_ll
 {
-	int			data;
+	long long	data;
 	struct s_ll	*next;
 }				t_ll;
 
-typedef struct	s_move_info
+typedef struct s_ll_handler
 {
-	int			count;
-	int			direction;
-}				t_move_info;
+	struct s_ll	*head;
+	int			size;
+}				t_ll_handler;
 
-typedef struct	s_set
+typedef struct s_set
 {
 	t_stack		*a;
 	t_stack		*b;
 }				t_set;
 
-typedef struct	s_vector_idx
+typedef struct s_pivot_info
 {
-	int			l;
-	int			r;
-}				t_vector_idx;
+	struct s_vector_val
+	{
+		long long	p1;
+		long long	p2;
+	}				val;
+	struct s_vector_idx
+	{
+		int			p1;
+		int			p2;
+	}				idx;
+}					t_pivot_info;
 
-typedef struct	s_vector_val
+typedef struct s_count
 {
-	long long	p1;
-	long long	p2;
-}				t_vector_val;
-
+	struct s_pop
+	{
+		int		small;
+		int		mid;
+		int		large;
+	}			pop;
+	struct s_rotation
+	{
+		int		small;
+		int		mid;
+		int		large;
+	}			rotation;
+}				t_count;
 
 #endif

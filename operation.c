@@ -6,20 +6,17 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 23:15:26 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/11 03:06:34 by mishin           ###   ########.fr       */
+/*   Updated: 2021/07/24 00:15:13 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
-
-
-void	swap_top(t_stack *stack, char *msg)				// O(n1
+void	swap_top(t_stack *stack)
 {
 	long long	fir;
 	long long	sec;
-	
+
 	fir = pop(stack);
 	if (fir == EMPTY)
 		return ;
@@ -28,20 +25,19 @@ void	swap_top(t_stack *stack, char *msg)				// O(n1
 		return ;
 	push(stack, fir);
 	push(stack, sec);
-	printf("%s", msg);
 }
 
-void	stack_to_stack(t_stack *from, t_stack *to, char *msg)		// O(1)
+void	stack_to_stack(t_stack *to, t_stack *from)
 {
 	long long	data;
 
-	if ((data = pop(from)) == EMPTY)
+	data = pop(from);
+	if (data == EMPTY)
 		return ;
 	push(to, data);
-	printf("%s", msg);
 }
 
-void	rotate(t_stack *stack, char *msg)							// O(n)
+void	rotate(t_stack *stack)
 {
 	long long	tmp;
 	int			i;
@@ -53,10 +49,9 @@ void	rotate(t_stack *stack, char *msg)							// O(n)
 	while (--i >= 0)
 		stack->data[i + 1] = stack->data[i];
 	stack->data[0] = tmp;
-	printf("%s", msg);
 }
 
-void 	reverse_rotate(t_stack *stack, char *msg)				// O(n)
+void	reverse_rotate(t_stack *stack)
 {
 	long long	tmp;
 	int			i;
@@ -68,5 +63,4 @@ void 	reverse_rotate(t_stack *stack, char *msg)				// O(n)
 	while (++i < stack->top)
 		stack->data[i] = stack->data[i + 1];
 	stack->data[stack->top] = tmp;
-	printf("%s", msg);
 }
