@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 23:16:52 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/23 23:17:17 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:37:31 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	s(char c, t_set *stack)
 {
 	char	*msg;
 
+	msg = NULL;
 	if (c == 'a')
 	{
 		swap_top(stack->a);
@@ -40,6 +41,7 @@ void	rr(char c, t_set *stack)
 {
 	char	*msg;
 
+	msg = NULL;
 	if (c == 'a')
 	{
 		reverse_rotate(stack->a);
@@ -64,6 +66,7 @@ void	r(char c, t_set *stack)
 {
 	char	*msg;
 
+	msg = NULL;
 	if (c == 'a')
 	{
 		rotate(stack->a);
@@ -88,6 +91,7 @@ void	p(char c, t_set *stack)
 {
 	char	*msg;
 
+	msg = NULL;
 	if (c == 'a')
 	{
 		stack_to_stack(stack->a, stack->b);

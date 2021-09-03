@@ -6,13 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 12:16:42 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 12:43:09 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:13:10 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-//NOTE: size 100 , first partitioning ?
 
 static inline int	send_small_part_to_b(t_set *stack, t_count *count, int last)
 {

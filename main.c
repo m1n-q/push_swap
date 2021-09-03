@@ -6,13 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:21:47 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 10:18:07 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:28:54 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-//TODO: TESTER
 
 int	main(int argc, char **argv)
 {

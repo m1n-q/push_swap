@@ -6,12 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 18:08:54 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 12:44:58 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:29:40 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-//NOTE: REMOVE print_all
 
 static size_t	ft_strlen(const char *s)
 {

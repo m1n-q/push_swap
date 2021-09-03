@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 18:25:05 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 00:49:33 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:38:20 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	clear_stack_set(t_set *stack)
 
 int	init_stack(t_set *set, int size)
 {
-	t_stack	*new;
 	int		i;
 
 	if (size < 1)

@@ -6,13 +6,11 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 17:27:24 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 12:45:20 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:29:13 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-//TODO: NORMINETTE, LAST TRY
 
 static int	asc(t_stack *stack, int upper_idx, int lower_idx)
 {

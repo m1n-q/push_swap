@@ -6,7 +6,7 @@
 /*   By: mishin <mishin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/16 17:03:42 by mishin            #+#    #+#             */
-/*   Updated: 2021/07/25 10:52:00 by mishin           ###   ########.fr       */
+/*   Updated: 2021/09/03 11:37:51 by mishin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_pivot_info	get_pivot_info(t_stack *stack, int upper_idx, int lower_idx)
 {
 	t_pivot_info	pivot;
 	long long		*arr;
-	long long		val;
 	int				size;
 
 	size = upper_idx - lower_idx + 1;
